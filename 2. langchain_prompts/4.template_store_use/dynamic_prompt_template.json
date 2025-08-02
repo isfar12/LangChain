@@ -1,0 +1,17 @@
+{
+    "name": null,
+    "input_variables": [
+        "explanation_type",
+        "length",
+        "paper_name"
+    ],
+    "optional_variables": [],
+    "output_parser": null,
+    "partial_variables": {},
+    "metadata": null,
+    "tags": null,
+    "template": "\nPlease provide a detailed explanation of the following paper:\n\nPaper Name: {paper_name}\nExplanation Type: {explanation_type}\nOutput Length: {length}\n1. If mathematical equations are present, explain them in simple terms.\n2. Provide a beginner-friendly overview of the paper.\n3. Include a technical summary for advanced readers.\n4. Use related examples to illustrate key concepts.\n\nEnsure the explanation is clear and concise, tailored to the selected output length.\n\n",
+    "template_format": "f-string",
+    "validate_template": true,
+    "_type": "prompt"
+}
