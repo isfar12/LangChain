@@ -1,0 +1,36 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "ProductReview",
+  "description": "Schema for summarizing a product review",
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string",
+      "description": "A short title summarizing the review"
+    },
+    "summary": {
+      "type": "string",
+      "description": "A concise summary of the review content"
+    },
+    "sentiment": {
+      "type": "string",
+      "enum": ["positive", "neutral", "negative"],
+      "description": "Overall sentiment of the review"
+    },
+    "keywords": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Important keywords extracted from the review"
+    },
+    "rating": {
+      "type": "number",
+      "minimum": 1,
+      "maximum": 5,
+      "description": "Star rating from 1 to 5"
+    }
+  },
+  "required": ["title", "summary", "sentiment"],
+  "additionalProperties": false
+}
