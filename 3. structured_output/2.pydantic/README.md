@@ -9,9 +9,11 @@ Pydantic is a data validation library that uses Python type annotations to valid
 ## Files Overview
 
 ### `pydantic_basic.py`
+
 Basic Pydantic model usage - shows how to define models with validation, defaults, and constraints.
 
 ### `struct_out_using_pydantic.py`
+
 Integration with LangChain models for structured output using Pydantic models.
 
 ## Tutorial: Basic Pydantic Models
@@ -81,12 +83,14 @@ print(f"Rating: {result.rating}")
 ## Key Features
 
 ### 1. **Automatic Validation**
+
 ```python
 age: int = Field(ge=0, le=120)  # Must be between 0 and 120
 email: EmailStr                 # Must be valid email format
 ```
 
 ### 2. **Default Values**
+
 ```python
 name: str = "Anonymous"
 active: bool = True
@@ -94,12 +98,14 @@ tags: List[str] = Field(default_factory=list)
 ```
 
 ### 3. **Field Constraints**
+
 ```python
 password: str = Field(min_length=8, regex=r"^(?=.*[A-Za-z])(?=.*\d)")
 score: float = Field(ge=0.0, le=100.0)
 ```
 
 ### 4. **Rich Type System**
+
 ```python
 from typing import Optional, List, Dict, Union, Literal
 
@@ -108,6 +114,7 @@ metadata: Optional[Dict[str, Any]] = None
 ```
 
 ### 5. **Custom Validation**
+
 ```python
 from pydantic import validator
 
@@ -123,6 +130,7 @@ class User(BaseModel):
 ## Advanced Usage
 
 ### Nested Models
+
 ```python
 class Address(BaseModel):
     street: str
@@ -135,6 +143,7 @@ class User(BaseModel):
 ```
 
 ### Model Configuration
+
 ```python
 class User(BaseModel):
     name: str
@@ -164,6 +173,7 @@ class User(BaseModel):
 ## Common Patterns
 
 ### User Profile Extraction
+
 ```python
 class UserProfile(BaseModel):
     name: str = Field(description="Full name")
@@ -173,6 +183,7 @@ class UserProfile(BaseModel):
 ```
 
 ### Sentiment Analysis
+
 ```python
 class SentimentAnalysis(BaseModel):
     text: str = Field(description="Original text")
@@ -182,6 +193,7 @@ class SentimentAnalysis(BaseModel):
 ```
 
 ### Data Extraction
+
 ```python
 class Invoice(BaseModel):
     invoice_number: str

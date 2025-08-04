@@ -37,6 +37,7 @@ print(result)
 ## What is JsonOutputParser?
 
 `JsonOutputParser` is designed to:
+
 - **Extract JSON** from LLM text responses
 - **Parse automatically** into Python dictionaries
 - **Provide format instructions** to guide the LLM
@@ -53,13 +54,15 @@ print(instructions)
 ```
 
 Output:
-```
+
+```bash
 Return a JSON object. Do not include any explanations, only provide a RFC8259 compliant JSON response.
 ```
 
 ### 2. JSON Parsing
 
 The parser automatically:
+
 - Extracts JSON from model responses
 - Converts to Python dictionaries
 - Handles common JSON formatting issues
@@ -99,6 +102,7 @@ print(result)
 ```
 
 Expected output:
+
 ```python
 {
     "name": "Sarah Connor",
@@ -161,11 +165,13 @@ extraction_template = PromptTemplate(
 ### 1. Malformed JSON
 
 **Problem:**
-```
+
+```terminal
 Model returns: "Here's the JSON: {name: 'John', age: 30}"
 ```
 
 **Solution:**
+
 - Use better models (llama3.1, mistral)
 - Lower temperature for consistency
 - More explicit instructions
@@ -173,11 +179,13 @@ Model returns: "Here's the JSON: {name: 'John', age: 30}"
 ### 2. Extra Text
 
 **Problem:**
-```
+
+```terminal
 Model returns: "Sure! Here's the character: {name: 'John'} Hope this helps!"
 ```
 
 **Solution:**
+
 ```python
 template = PromptTemplate(
     template="""Create a character for {name}.
@@ -193,7 +201,8 @@ template = PromptTemplate(
 ### 3. Inconsistent Fields
 
 **Problem:**
-```
+
+```bash
 First call: {"name": "John", "age": 30}
 Second call: {"character_name": "Jane", "years_old": 25}
 ```
@@ -257,6 +266,7 @@ except Exception as e:
 ## Model Recommendations
 
 For JSON output:
+
 - **Best:** `llama3.1:8b`, `mistral:7b`
 - **Good:** `qwen2:7b`, `codellama:7b`
 - **Avoid:** Very small models that struggle with JSON format
@@ -264,12 +274,14 @@ For JSON output:
 ## When to Use JsonOutputParser
 
 ✅ **Good for:**
+
 - Quick prototyping with JSON
 - Flexible data structures
 - When exact schema isn't critical
 - Simple JSON extraction
 
 ❌ **Consider alternatives for:**
+
 - Production applications requiring validation
 - Consistent field names needed
 - Type safety requirements
@@ -278,6 +290,7 @@ For JSON output:
 ## Exercise
 
 Create a JSON parser chain that:
+
 1. Takes a company name as input
 2. Returns company analysis with fields: name, industry, strengths, weaknesses, market_position
 3. Handle parsing errors gracefully

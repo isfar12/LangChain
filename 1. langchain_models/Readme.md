@@ -4,7 +4,7 @@ This repository contains examples and implementations of various LangChain model
 
 ## 📁 Project Structure
 
-```
+```terminal
 langchain_models/
 ├── LLMs/                    # Large Language Models
 │   └── llm_demo.py         # Ollama LLM integration example
@@ -23,6 +23,7 @@ langchain_models/
 ## 🚀 Quick Start
 
 ### Prerequisites
+
 ```bash
 pip install langchain langchain-huggingface langchain-ollama
 pip install transformers sentence-transformers
@@ -30,7 +31,9 @@ pip install scikit-learn numpy python-dotenv
 ```
 
 ### Environment Setup
+
 Create a `.env` file in the root directory:
+
 ```env
 HUGGINGFACEHUB_API_TOKEN="your-hugging-face-token-here"
 OPENAI_API_KEY="your-openai-api-key-here"
@@ -39,11 +42,13 @@ OPENAI_API_KEY="your-openai-api-key-here"
 ## 📚 Model Categories
 
 ### 1. Large Language Models (LLMs)
+
 **Location**: `LLMs/`
 
 Basic text generation models for completion tasks.
 
 #### **llm_demo.py** - Ollama Integration
+
 ```python
 # Simple LLM for text completion
 from langchain_ollama import OllamaLLM
@@ -53,6 +58,7 @@ response = llm.invoke("What is the capital of France?")
 ```
 
 **Features:**
+
 - Local Ollama model integration
 - Simple question-answering
 - No conversation memory
@@ -61,11 +67,13 @@ response = llm.invoke("What is the capital of France?")
 ---
 
 ### 2. Chat Models
+
 **Location**: `ChatModels/`
 
 Conversational AI models with message-based interactions.
 
 #### **chatmodel_ollama.py** - Local Ollama Chat
+
 ```python
 # Conversational AI with system prompts
 from langchain_ollama import ChatOllama
@@ -80,12 +88,14 @@ response = chat.invoke(messages)
 ```
 
 **Features:**
+
 - Message-based conversation
 - System prompt configuration
 - Local model deployment
 - Conversation context handling
 
 #### **chatmodel_hf_using_local.py** - Local HuggingFace Chat
+
 ```python
 # Local HuggingFace model with custom parameters
 from transformers import pipeline
@@ -101,12 +111,14 @@ llm = HuggingFacePipeline(pipeline=generator)
 ```
 
 **Features:**
+
 - Local HuggingFace model integration
 - Custom generation parameters
 - Offline functionality
 - Privacy-focused deployment
 
 #### **chatmodel_hf_using_api.py** - HuggingFace API Chat
+
 ```python
 # HuggingFace Inference API integration
 from langchain_huggingface import ChatHuggingFace, HuggingFaceEndpoint
@@ -119,6 +131,7 @@ chat_model = ChatHuggingFace(llm=llm)
 ```
 
 **Features:**
+
 - Cloud-based inference
 - Access to latest models
 - Scalable deployment
@@ -127,11 +140,13 @@ chat_model = ChatHuggingFace(llm=llm)
 ---
 
 ### 3. Embedding Models
+
 **Location**: `EmbeddingModels/`
 
 Text embedding models for semantic understanding and similarity analysis.
 
 #### **embedding_hf_local.py** - Local Embeddings
+
 ```python
 # Local sentence transformer embeddings
 from langchain_huggingface import HuggingFaceEmbeddings
@@ -143,12 +158,14 @@ result = embeddings.embed_query("What is the capital of Bangladesh?")
 ```
 
 **Features:**
+
 - 384-dimensional embeddings
 - Local model deployment
 - Fast inference
 - Semantic similarity analysis
 
 #### **document_similarity.py** - Similarity Analysis
+
 ```python
 # Document similarity comparison
 from sklearn.metrics.pairwise import cosine_similarity
@@ -164,6 +181,7 @@ similarity_matrix = cosine_similarity(embeddings_list)
 ```
 
 **Features:**
+
 - Multi-document comparison
 - Cosine similarity calculation
 - Similarity matrix generation
@@ -172,26 +190,31 @@ similarity_matrix = cosine_similarity(embeddings_list)
 ## 🛠️ Use Cases
 
 ### 1. **Question Answering**
+
 - **Files**: `llm_demo.py`, `chatmodel_ollama.py`
 - **Description**: Simple Q&A systems using local models
 - **Best for**: Quick answers, factual queries
 
 ### 2. **Conversational AI**
+
 - **Files**: All chat model files
 - **Description**: Interactive chatbots with conversation memory
 - **Best for**: Customer support, virtual assistants
 
 ### 3. **Content Generation**
+
 - **Files**: `chatmodel_hf_using_local.py`
 - **Description**: Generate articles, summaries, creative content
 - **Best for**: Content creation, writing assistance
 
 ### 4. **Semantic Search**
+
 - **Files**: `embedding_hf_local.py`, `document_similarity.py`
 - **Description**: Find similar documents based on meaning
 - **Best for**: Document retrieval, recommendation systems
 
 ### 5. **Document Analysis**
+
 - **Files**: `document_similarity.py`
 - **Description**: Analyze document relationships and clusters
 - **Best for**: Content organization, duplicate detection
@@ -209,16 +232,19 @@ similarity_matrix = cosine_similarity(embeddings_list)
 ## 🚀 Performance Tips
 
 ### Local Models
+
 - **GPU Acceleration**: Use CUDA if available
 - **Memory Management**: Monitor RAM usage with large models
 - **Model Quantization**: Use half-precision for memory efficiency
 
 ### API Models
+
 - **Rate Limiting**: Respect API rate limits
 - **Caching**: Cache responses for repeated queries
 - **Error Handling**: Implement retry mechanisms
 
 ### Embeddings
+
 - **Batch Processing**: Process multiple documents together
 - **Vector Storage**: Use vector databases for large datasets
 - **Similarity Thresholds**: Tune similarity thresholds for your use case
@@ -226,24 +252,29 @@ similarity_matrix = cosine_similarity(embeddings_list)
 ## 📖 Getting Started Guide
 
 ### 1. **Start with LLMs** (`LLMs/llm_demo.py`)
-   - Simple text completion
-   - No complex setup required
-   - Good for understanding basics
+
+- Simple text completion
+- No complex setup required
+- Good for understanding basics
 
 ### 2. **Move to Chat Models** (`ChatModels/`)
-   - More sophisticated interactions
-   - Conversation context
-   - System prompts
+
+- More sophisticated interactions
+- Conversation context
+- System prompts
 
 ### 3. **Explore Embeddings** (`EmbeddingModels/`)
-   - Semantic understanding
-   - Document similarity
-   - Search applications
+
+- Semantic understanding
+- Document similarity
+- Search applications
 
 ## 🔍 Advanced Features
 
 ### Chain Integration
+
 All models can be used with LangChain chains:
+
 ```python
 from langchain.chains import LLMChain
 from langchain.prompts import PromptTemplate
@@ -252,14 +283,18 @@ chain = LLMChain(llm=your_model, prompt=your_prompt)
 ```
 
 ### Memory Integration
+
 Add conversation memory:
+
 ```python
 from langchain.memory import ConversationBufferMemory
 memory = ConversationBufferMemory()
 ```
 
 ### Agent Framework
+
 Use models with LangChain agents:
+
 ```python
 from langchain.agents import initialize_agent
 agent = initialize_agent(tools, llm, agent_type="...")
@@ -283,6 +318,7 @@ agent = initialize_agent(tools, llm, agent_type="...")
 ## 📝 Contributing
 
 When adding new models or examples:
+
 1. Follow the existing folder structure
 2. Include comprehensive documentation
 3. Add usage examples
@@ -291,7 +327,8 @@ When adding new models or examples:
 
 ## 🆘 Troubleshooting
 
-### Common Issues:
+### Common Issues
+
 - **Model not found**: Check local model paths
 - **API errors**: Verify API keys and internet connection
 - **Memory errors**: Reduce batch sizes or use CPU

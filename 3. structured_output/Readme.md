@@ -9,17 +9,20 @@ Structured output is crucial for building reliable AI applications. Instead of p
 ## Three Approaches Covered
 
 ### 1. TypedDict (`1.typedict/`)
+
 - Uses Python's `TypedDict` for basic type specification
 - Simple dictionary-based structures
 - Good for basic type hints and simple schemas
 
 ### 2. Pydantic (`2.pydantic/`)
+
 - Uses Pydantic models for advanced validation
 - Field constraints, default values, and data validation
 - Rich type system with automatic validation
 - **Most recommended approach**
 
 ### 3. JSON Schema (`3.json/`)
+
 - Uses raw JSON Schema definitions
 - Maximum flexibility for complex schemas
 - Direct schema control
@@ -34,6 +37,7 @@ Structured output is crucial for building reliable AI applications. Instead of p
 ## Model Recommendations
 
 For structured output with Ollama:
+
 - `llama3.1:8b` - Best overall performance
 - `mistral:7b` - Good alternative
 - `qwen2:7b` - Excellent instruction following
@@ -55,14 +59,14 @@ But sometimes, you **don’t want just words** — you need the answer in a **sp
 
 ✅ **Structured Output** in LangChain means:
 
-* Forcing the AI to reply in a **fixed format** (e.g., JSON, dictionary, list of objects).
-* Making it easier for software to **read, store, or process** the response.
+- Forcing the AI to reply in a **fixed format** (e.g., JSON, dictionary, list of objects).
+- Making it easier for software to **read, store, or process** the response.
 
 📌 **Analogy:**
 Imagine you’re a chef (AI) taking orders from a waiter (LangChain).
 
-* If you just “talk,” you might say: *“I’ll make a pizza with cheese, some olives, maybe mushrooms.”*
-* But the restaurant POS system (your app) needs the order in a **structured format**:
+- If you just “talk,” you might say: *“I’ll make a pizza with cheese, some olives, maybe mushrooms.”*
+- But the restaurant POS system (your app) needs the order in a **structured format**:
 
 ```json
 {
@@ -79,15 +83,15 @@ This way, the **kitchen staff and billing system** know exactly what to do.
 
 LangChain provides **tools** to make sure the AI **sticks to the structure**:
 
-* **Output Parsers** → These tell the AI how the final response should “look.”
-* **Schemas** → Define the “template” for answers (e.g., JSON with specific fields).
-* **Validation** → Checks if the AI’s answer actually fits the structure.
+- **Output Parsers** → These tell the AI how the final response should “look.”
+- **Schemas** → Define the “template” for answers (e.g., JSON with specific fields).
+- **Validation** → Checks if the AI’s answer actually fits the structure.
 
 📌 **Analogy:**
 Think of LangChain like a **template in Google Forms**.
 
-* The form **forces people to fill boxes** like Name, Email, and Age.
-* No matter how they feel like writing, they must follow the **boxes you gave**.
+- The form **forces people to fill boxes** like Name, Email, and Age.
+- No matter how they feel like writing, they must follow the **boxes you gave**.
 
 ---
 
@@ -111,9 +115,9 @@ With structured output:
 
 ✅ Easier for apps to:
 
-* **Store in databases**
-* **Use in dashboards**
-* **Trigger other actions** (e.g., send an umbrella reminder if “rainy”)
+- **Store in databases**
+- **Use in dashboards**
+- **Trigger other actions** (e.g., send an umbrella reminder if “rainy”)
 
 📌 **Analogy:**
 Like getting your **salary** — you don’t want your boss to hand you *“some money”*.
@@ -147,8 +151,8 @@ The AI must **follow this schema** — like filling out a **government form**.
 
 ## 🎯 **Simple Takeaway**
 
-* **Without structured output**: AI replies like a chatty friend.
-* **With structured output**: AI replies like a **Google Sheet row** — neat, tidy, and ready for use.
+- **Without structured output**: AI replies like a chatty friend.
+- **With structured output**: AI replies like a **Google Sheet row** — neat, tidy, and ready for use.
 
 📌 **Analogy:**
 Think of **structured output** as putting AI answers into **labeled boxes** instead of dumping them into a bag. It’s easier to **find, use, and trust** the information.

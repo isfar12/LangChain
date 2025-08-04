@@ -4,7 +4,7 @@ This folder demonstrates how to create, store, and reuse prompt templates in Lan
 
 ## 📁 Folder Contents
 
-```
+```bash
 template_store_use/
 ├── template_gen.py              # Template creation and storage
 ├── dynamic_prompt_template.json # Saved template file
@@ -15,6 +15,7 @@ template_store_use/
 ## 🎯 Purpose
 
 This project demonstrates:
+
 1. **Template Creation**: How to create structured prompt templates
 2. **Template Storage**: Saving templates to JSON files for reuse
 3. **Template Loading**: Loading saved templates in different applications
@@ -27,7 +28,7 @@ This project demonstrates:
 
 **Purpose**: Creates and saves a reusable prompt template for paper explanation tasks.
 
-#### Code Breakdown:
+#### Code Breakdown
 
 ```python
 from langchain.prompts import PromptTemplate
@@ -48,20 +49,23 @@ Ensure the explanation is clear and concise, tailored to the selected output len
 """
 ```
 
-#### Key Components:
+#### Key Components
 
 **Template Variables:**
+
 - `{paper_name}`: Dynamic paper title input
 - `{explanation_type}`: Type of explanation (summary, detailed, etc.)
 - `{length}`: Desired output length (short, medium, long)
 
 **Template Features:**
+
 - **Structured Instructions**: Clear, numbered guidelines
 - **Flexibility**: Adaptable to different papers and requirements
 - **User-Friendly**: Beginner-friendly explanations
 - **Technical Depth**: Advanced summaries for experts
 
 **Template Creation:**
+
 ```python
 template_instance = PromptTemplate(
     template=template,
@@ -74,6 +78,7 @@ template_instance.save("dynamic_prompt_template.json")
 ```
 
 **Benefits:**
+
 - ✅ **Reusability**: Save once, use everywhere
 - ✅ **Consistency**: Standardized format across applications
 - ✅ **Validation**: Built-in template validation
@@ -85,7 +90,8 @@ template_instance.save("dynamic_prompt_template.json")
 
 **Purpose**: Persistent storage of the prompt template in JSON format.
 
-#### Structure:
+#### Structure
+
 ```json
 {
     "name": null,
@@ -99,6 +105,7 @@ template_instance.save("dynamic_prompt_template.json")
 ```
 
 **Key Features:**
+
 - **Serialization**: Template stored as structured data
 - **Portability**: Can be shared across projects and teams
 - **Version Control**: Easy to track changes
@@ -110,15 +117,17 @@ template_instance.save("dynamic_prompt_template.json")
 
 **Purpose**: Provides a user-friendly web interface for using the stored template with dynamic inputs.
 
-#### Key Components:
+#### Key Components-
 
 **Model Setup:**
+
 ```python
 from langchain_ollama import ChatOllama
 model = ChatOllama(model="phi3", temperature=0.5)
 ```
 
 **Template Loading:**
+
 ```python
 from langchain_core.prompts import load_prompt
 # Loads the saved template
@@ -126,6 +135,7 @@ template = load_prompt("dynamic_prompt_template.json")
 ```
 
 **Interactive UI Elements:**
+
 ```python
 import streamlit as st
 
@@ -138,6 +148,7 @@ paper_name = st.selectbox("Select a Paper", [...])
 ```
 
 **Features:**
+
 - 🎨 **User-Friendly Interface**: Web-based interaction
 - 🔄 **Dynamic Inputs**: Real-time prompt customization
 - 📊 **Interactive Elements**: Dropdowns, text inputs, sliders
@@ -147,9 +158,9 @@ paper_name = st.selectbox("Select a Paper", [...])
 
 ## 🛠️ How It Works
 
-### Workflow Overview:
+### Workflow Overview
 
-```
+```bash
 1. Template Creation (template_gen.py)
    ↓
 2. Template Storage (dynamic_prompt_template.json)
@@ -161,7 +172,7 @@ paper_name = st.selectbox("Select a Paper", [...])
 5. AI Model Response
 ```
 
-### Step-by-Step Process:
+### Step-by-Step Process
 
 1. **Create Template** (`template_gen.py`):
    - Define prompt structure with variables
@@ -183,69 +194,82 @@ paper_name = st.selectbox("Select a Paper", [...])
 ## 🎯 Use Cases
 
 ### 1. **Academic Paper Analysis**
+
 - **Input**: Paper name, explanation type, length
 - **Output**: Structured paper explanation
 - **Users**: Students, researchers, academics
 
 ### 2. **Content Summarization**
+
 - **Adaptable for**: Articles, reports, documents
 - **Benefits**: Consistent formatting, customizable depth
 
 ### 3. **Educational Tools**
+
 - **Use**: Teaching complex concepts
 - **Features**: Beginner-friendly explanations, technical summaries
 
 ### 4. **Research Assistance**
+
 - **Purpose**: Quick paper overviews
 - **Advantage**: Standardized analysis format
 
 ## 🚀 Running the Applications
 
-### Prerequisites:
+### Prerequisites
+
 ```bash
 pip install langchain langchain-ollama streamlit
 ```
 
-### 1. Generate Template:
+### 1. Generate Template
+
 ```bash
 python template_gen.py
 ```
+
 *Creates `dynamic_prompt_template.json`*
 
-### 2. Run Interactive UI:
+### 2. Run Interactive UI
+
 ```bash
 streamlit run new_prompt_ui.py
 ```
+
 *Opens web interface at `http://localhost:8501`*
 
 ## 🔧 Customization Options
 
-### Template Modifications:
+### Template Modifications
 
 1. **Add New Variables**:
-```python
-input_variables = ["paper_name", "explanation_type", "length", "audience"]
-```
+
+   ```python
+   input_variables = ["paper_name", "explanation_type", "length", "audience"]
+   ```
 
 2. **Modify Instructions**:
-```python
-template = """
-Your custom instructions here with {variables}
-"""
-```
+
+   ```python
+   template = """
+   Your custom instructions here with {variables}
+   """
+   ```
 
 3. **Change Output Format**:
-```python
-template = """
-Format: {format_type}
-Style: {writing_style}
-Content: {content_focus}
-"""
-```
 
-### UI Customization:
+   ```python
+   template = """
+   Format: {format_type}
+   Style: {writing_style}
+   Content: {content_focus}
+   """
+   ```
+
+### UI Customization
 
 1. **Add New Input Types**:
+
 ```python
 # Slider for complexity level
 complexity = st.slider("Complexity Level", 1, 10, 5)
@@ -257,7 +281,8 @@ custom_notes = st.text_area("Additional Notes")
 topics = st.multiselect("Focus Areas", ["Math", "Methodology", "Results"])
 ```
 
-2. **Styling Options**:
+1. **Styling Options**:
+
 ```python
 st.markdown("## Custom Styling")
 st.info("Information boxes")
@@ -267,25 +292,29 @@ st.success("Success indicators")
 
 ## 💡 Best Practices Demonstrated
 
-### 1. **Template Design**:
+### 1. **Template Design**
+
 - ✅ Clear, structured instructions
 - ✅ Flexible variable placement
 - ✅ Comprehensive guidance
 - ✅ User-centric approach
 
-### 2. **Code Organization**:
+### 2. **Code Organization**
+
 - ✅ Separation of concerns
 - ✅ Reusable components
 - ✅ Clean file structure
 - ✅ Proper documentation
 
-### 3. **User Experience**:
+### 3. **User Experience**
+
 - ✅ Intuitive interface design
 - ✅ Real-time feedback
 - ✅ Error handling
 - ✅ Progressive disclosure
 
-### 4. **Maintenance**:
+### 4. **Maintenance**
+
 - ✅ Version control friendly
 - ✅ Easy to modify
 - ✅ Shareable templates
@@ -293,21 +322,24 @@ st.success("Success indicators")
 
 ## 🔍 Advanced Features
 
-### Template Composition:
+### Template Composition
+
 ```python
 # Combine multiple templates
 base_template = load_prompt("base_template.json")
 specific_template = load_prompt("specific_template.json")
 ```
 
-### Conditional Logic:
+### Conditional Logic
+
 ```python
 # Add conditional instructions based on input
 if explanation_type == "technical":
     template += "\nInclude mathematical formulations and proofs."
 ```
 
-### Template Inheritance:
+### Template Inheritance
+
 ```python
 # Create template hierarchies
 class PaperExplanationTemplate(PromptTemplate):
@@ -317,7 +349,7 @@ class PaperExplanationTemplate(PromptTemplate):
 
 ## 🆘 Troubleshooting
 
-### Common Issues:
+### Common Issues
 
 1. **Template Validation Errors**:
    - Check variable names match exactly

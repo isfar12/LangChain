@@ -44,6 +44,7 @@ print(result)
 ## What is StructuredOutputParser?
 
 `StructuredOutputParser` provides:
+
 - **Schema Definition** - Explicit field specifications
 - **Consistent Structure** - Same fields every time
 - **Better Instructions** - Detailed format guidance
@@ -134,7 +135,7 @@ print(instructions)
 ```
 
 Example output:
-```
+
 The output should be a markdown code snippet formatted in the following schema, including the leading and trailing "```json" and "```":
 
 ```json
@@ -143,7 +144,6 @@ The output should be a markdown code snippet formatted in the following schema, 
     "age": string  // The age of the character  
     "description": string  // A brief description of the character
 }
-```
 ```
 
 ## Benefits Over JsonOutputParser
@@ -229,11 +229,13 @@ def safe_character_generation(character_type, name):
 ### 1. Clear Field Descriptions
 
 **Good:**
+
 ```python
 ResponseSchema(name="sentiment", description="Overall sentiment: positive, negative, or neutral")
 ```
 
 **Poor:**
+
 ```python
 ResponseSchema(name="sentiment", description="Sentiment")
 ```
@@ -241,11 +243,13 @@ ResponseSchema(name="sentiment", description="Sentiment")
 ### 2. Logical Field Names
 
 **Good:**
+
 ```python
 ResponseSchema(name="publication_date", description="When the article was published")
 ```
 
 **Poor:**
+
 ```python
 ResponseSchema(name="date", description="Some date")
 ```
@@ -279,6 +283,7 @@ complete_schema = [
 **Problem:** Parser expects all fields but LLM skips some
 
 **Solution:**
+
 ```python
 # Make fields optional in prompt
 template = PromptTemplate(
@@ -297,6 +302,7 @@ If information is unknown, use "Unknown" or "Not specified".
 **Problem:** LLM returns different formats for same field
 
 **Solution:**
+
 ```python
 ResponseSchema(
     name="rating", 
@@ -309,6 +315,7 @@ ResponseSchema(
 **Problem:** LLM doesn't follow JSON format exactly
 
 **Solution:**
+
 - Use more reliable models (llama3.1:8b, mistral:7b)
 - Lower temperature for consistency
 - Add explicit format reminders in prompt
@@ -316,6 +323,7 @@ ResponseSchema(
 ## Model Recommendations
 
 For structured output:
+
 - **Best:** `llama3.1:8b`, `mistral:7b`
 - **Good:** `qwen2:7b`, `codellama:7b`
 - **Acceptable:** `phi3:medium`
@@ -324,12 +332,14 @@ For structured output:
 ## When to Use StructuredOutputParser
 
 ✅ **Good for:**
+
 - Consistent field requirements
 - When you need the same structure every time
 - Moderate complexity schemas
 - Better than basic JSON parsing
 
 ❌ **Consider PydanticOutputParser for:**
+
 - Type validation requirements
 - Complex data constraints
 - Production applications
@@ -338,6 +348,7 @@ For structured output:
 ## Exercise
 
 Create a structured parser for movie analysis with fields:
+
 - movie_title
 - director
 - genre

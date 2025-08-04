@@ -9,9 +9,11 @@ This folder demonstrates using Python's `TypedDict` for basic structured output 
 ## Files Overview
 
 ### `typedict_basic.py`
+
 Basic TypedDict usage without LangChain - shows how to define and use TypedDict classes.
 
-### `struct_out_using_typedict.py` 
+### `struct_out_using_typedict.py`
+
 Integration with LangChain models for structured output using TypedDict.
 
 ## Tutorial: Basic TypedDict
@@ -74,12 +76,14 @@ print(result)  # Returns a dictionary matching UserProfile structure
 ## When to Use TypedDict
 
 ✅ **Good for:**
+
 - Simple dictionary structures
 - Basic type hints
 - When you don't need validation
 - Prototyping and quick implementations
 
 ❌ **Not ideal for:**
+
 - Complex validation requirements
 - Default values needed
 - Field constraints (min/max, regex, etc.)
@@ -88,6 +92,7 @@ print(result)  # Returns a dictionary matching UserProfile structure
 ## Next Steps
 
 For more advanced structured output with validation, check out the `2.pydantic/` folder which provides:
+
 - Runtime validation
 - Default values
 - Field constraints

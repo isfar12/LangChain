@@ -9,9 +9,11 @@ JSON Schema is a vocabulary that allows you to annotate and validate JSON docume
 ## Files Overview
 
 ### `basic_json.json`
+
 A complete JSON Schema definition example showing all the key components and validation rules.
 
 ### `struct_using_json.py`
+
 Integration with LangChain models using JSON Schema for structured output.
 
 ## Tutorial: Basic JSON Schema Structure
@@ -83,6 +85,7 @@ print(json.dumps(result, indent=2))
 ## JSON Schema Components
 
 ### 1. **Basic Types**
+
 ```json
 {
   "name": {"type": "string"},
@@ -95,6 +98,7 @@ print(json.dumps(result, indent=2))
 ```
 
 ### 2. **String Validation**
+
 ```json
 {
   "email": {
@@ -111,6 +115,7 @@ print(json.dumps(result, indent=2))
 ```
 
 ### 3. **Number Constraints**
+
 ```json
 {
   "age": {
@@ -127,6 +132,7 @@ print(json.dumps(result, indent=2))
 ```
 
 ### 4. **Array Definitions**
+
 ```json
 {
   "tags": {
@@ -140,6 +146,7 @@ print(json.dumps(result, indent=2))
 ```
 
 ### 5. **Enum Values**
+
 ```json
 {
   "status": {
@@ -150,6 +157,7 @@ print(json.dumps(result, indent=2))
 ```
 
 ### 6. **Object Properties**
+
 ```json
 {
   "address": {
@@ -167,6 +175,7 @@ print(json.dumps(result, indent=2))
 ## Advanced JSON Schema Features
 
 ### Conditional Logic
+
 ```json
 {
   "if": {
@@ -179,6 +188,7 @@ print(json.dumps(result, indent=2))
 ```
 
 ### Multiple Types
+
 ```json
 {
   "value": {
@@ -191,6 +201,7 @@ print(json.dumps(result, indent=2))
 ```
 
 ### Complex Validation
+
 ```json
 {
   "password": {
@@ -276,6 +287,7 @@ ecommerce_schema = {
 ## Common Patterns
 
 ### Data Extraction
+
 ```python
 extraction_schema = {
     "type": "object",
@@ -296,6 +308,7 @@ extraction_schema = {
 ```
 
 ### Classification
+
 ```python
 classification_schema = {
     "type": "object",
@@ -311,12 +324,14 @@ classification_schema = {
 ## When to Use JSON Schema
 
 ✅ **Good for:**
+
 - Complex validation requirements
 - When you need maximum control
 - Integration with existing JSON Schema tools
 - API documentation generation
 
 ❌ **Consider Pydantic instead for:**
+
 - Python-centric applications
 - Simpler validation needs
 - Better IDE support requirements

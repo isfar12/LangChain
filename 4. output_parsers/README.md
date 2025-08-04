@@ -9,23 +9,28 @@ Output parsers are tools that convert raw LLM text responses into structured, us
 ## Files Overview
 
 ### 1. `without_stroutputparser.py`
+
 Manual approach without parsers - shows the baseline method of handling LLM outputs.
 
 ### 2. `stroutputparser.py`
+
 Using `StrOutputParser` for simple string processing and chaining operations.
 
 ### 3. `jsonoutputparser.py`
+
 Using `JsonOutputParser` for basic JSON output without validation.
 
 ### 4. `structured_output_using_parsers.py`
+
 Using `StructuredOutputParser` with `ResponseSchema` for defined structure.
 
 ### 5. `structured_output_using_pydantic.py`
+
 Using `PydanticOutputParser` for advanced validation and type checking.
 
 ## Progression of Complexity
 
-```
+```bash
 Manual Processing → String Parser → JSON Parser → Structured Parser → Pydantic Parser
      (Basic)         (Chaining)     (JSON)       (Schema)        (Validation)
 ```
@@ -51,6 +56,7 @@ Manual Processing → String Parser → JSON Parser → Structured Parser → Py
 ## Model Recommendations
 
 For output parsing with Ollama:
+
 - **Best**: `llama3.1:8b`, `mistral:7b`
 - **Good**: `qwen2:7b`, `codellama:7b`
 - **Avoid**: Very small models (< 7B parameters)

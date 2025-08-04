@@ -49,6 +49,7 @@ print(result)
 ## Why PydanticOutputParser?
 
 `PydanticOutputParser` is the **most advanced** parser offering:
+
 - **Type Validation** - Ensures correct data types
 - **Field Constraints** - Validates value ranges and formats
 - **Automatic Conversion** - Converts compatible types
@@ -319,6 +320,7 @@ class RobustModel(BaseModel):
 ## Model Recommendations
 
 For PydanticOutputParser:
+
 - **Best:** `llama3.1:8b`, `mistral:7b`, `qwen2:7b`
 - **Good:** `codellama:7b`, `phi3:medium`
 - **Minimum:** Use models with at least 7B parameters
@@ -327,6 +329,7 @@ For PydanticOutputParser:
 ## When to Use PydanticOutputParser
 
 ✅ **Always use for:**
+
 - Production applications
 - When data validation is critical
 - Complex data structures
@@ -334,6 +337,7 @@ For PydanticOutputParser:
 - Error handling needs
 
 ✅ **Especially good for:**
+
 - APIs requiring consistent data
 - Data processing pipelines
 - Form validation

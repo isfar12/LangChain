@@ -43,6 +43,7 @@ print(result)
 ## What is StrOutputParser?
 
 `StrOutputParser` is the simplest output parser that:
+
 - **Automatically extracts** `.content` from model responses
 - **Returns plain strings** for easy chaining
 - **Handles errors** gracefully
@@ -53,12 +54,14 @@ print(result)
 ### 1. Automatic Content Extraction
 
 **Manual Approach:**
+
 ```python
 result = model.invoke(prompt)
 content = result.content  # Manual extraction
 ```
 
 **With StrOutputParser:**
+
 ```python
 parser = StrOutputParser()
 content = (model | parser).invoke(prompt)  # Automatic
@@ -67,6 +70,7 @@ content = (model | parser).invoke(prompt)  # Automatic
 ### 2. Clean Chaining Syntax
 
 **Manual Approach:**
+
 ```python
 prompt1 = template1.invoke({"topic": "AI"})
 result1 = model.invoke(prompt1)
@@ -78,6 +82,7 @@ content2 = result2.content
 ```
 
 **With StrOutputParser:**
+
 ```python
 chain = template1 | model | parser | template2 | model | parser
 result = chain.invoke({"topic": "AI"})
@@ -86,6 +91,7 @@ result = chain.invoke({"topic": "AI"})
 ### 3. Error Handling
 
 StrOutputParser handles various model response formats:
+
 - Standard chat responses
 - Empty responses
 - Error responses
@@ -98,7 +104,7 @@ Let's break down this chain step by step:
 chain = template1 | model | parser | template2 | model | parser
 ```
 
-### Step-by-Step Flow:
+### Step-by-Step Flow
 
 1. **`template1`** - Creates prompt from input `{"topic": "AI"}`
 2. **`model`** - Generates detailed report
@@ -107,9 +113,9 @@ chain = template1 | model | parser | template2 | model | parser
 5. **`model`** - Generates summary
 6. **`parser`** - Extracts final string result
 
-### Data Flow Visualization:
+### Data Flow Visualization
 
-```
+```bash
 Input: {"topic": "AI"}
     ↓
 template1: "Write me a detailed report on AI"
@@ -128,6 +134,7 @@ parser: "Key points: 1. Machine learning..."  ← Final result
 ## Practical Examples
 
 ### Simple Question-Answer Chain
+
 ```python
 from langchain_core.output_parsers import StrOutputParser
 
@@ -150,6 +157,7 @@ print(result)
 ```
 
 ### Multi-Step Analysis Chain
+
 ```python
 analyze_template = PromptTemplate(
     template="Analyze the pros and cons of {topic}",
@@ -185,12 +193,14 @@ print(result)
 ## When to Use StrOutputParser
 
 ✅ **Good for:**
+
 - Simple text processing chains
 - When you need clean string output
 - Chaining multiple LLM calls
 - Prototyping workflows
 
 ❌ **Consider alternatives for:**
+
 - Structured data extraction
 - JSON parsing needs
 - Data validation requirements
@@ -199,6 +209,7 @@ print(result)
 ## Common Patterns
 
 ### Research Chain
+
 ```python
 research_chain = (
     research_template | model | parser |
@@ -208,6 +219,7 @@ research_chain = (
 ```
 
 ### Translation Chain
+
 ```python
 translation_chain = (
     translate_template | model | parser |
@@ -216,6 +228,7 @@ translation_chain = (
 ```
 
 ### Writing Assistant Chain
+
 ```python
 writing_chain = (
     draft_template | model | parser |
@@ -245,6 +258,7 @@ writing_chain = (
 ## Exercise
 
 Create a chain that:
+
 1. Takes a movie title as input
 2. Generates a plot summary
 3. Analyzes the genre

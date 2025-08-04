@@ -44,41 +44,50 @@ print(result.content)
 ## Step-by-Step Breakdown
 
 ### 1. Model Setup
+
 ```python
 model = ChatOllama(model="gemma:2b", temperature=0.5)
 ```
+
 - Creates an Ollama chat model instance
 - Temperature 0.5 for balanced creativity/consistency
 
 ### 2. Template Definition
+
 ```python
 template1 = PromptTemplate(
     template="Write me a detailed report on {topic}",
     input_variables=["topic"],
 )
 ```
+
 - Defines a reusable prompt template
 - `{topic}` is a placeholder for dynamic content
 
 ### 3. Manual Processing
+
 ```python
 prompt1 = template1.invoke({"topic": "Artificial Intelligence"})
 result = model.invoke(prompt1)
 ```
+
 - Manually invoke each step
 - Extract `.content` manually from model response
 
 ### 4. Chaining Manually
+
 ```python
 prompt2 = template2.invoke({"topic": result.content})
 result2 = model.invoke(prompt2)
 ```
+
 - Use output from first model as input to second
 - Requires manual content extraction
 
 ## Challenges with Manual Approach
 
 ### 1. **Verbose Code**
+
 ```python
 # Manual approach - lots of steps
 prompt1 = template1.invoke({"topic": "AI"})
@@ -91,16 +100,19 @@ content2 = result2.content  # Manual extraction again
 ```
 
 ### 2. **Error Prone**
+
 - Must remember to extract `.content` each time
 - Easy to forget or make mistakes
 - No automatic error handling
 
 ### 3. **Hard to Chain**
+
 - Each step requires manual intervention
 - Difficult to create complex workflows
 - No automatic data flow
 
 ### 4. **No Data Validation**
+
 - No way to ensure output format
 - Raw text only - no structured data
 - Must manually parse any structure
@@ -122,12 +134,14 @@ result = chain.invoke({"topic": "Artificial Intelligence"})
 ## When to Use Manual Approach
 
 ✅ **Good for:**
+
 - Simple, one-off tasks
 - Learning LangChain basics
 - Quick prototyping
 - Single-step operations
 
 ❌ **Avoid for:**
+
 - Complex workflows
 - Production applications
 - Chained operations
