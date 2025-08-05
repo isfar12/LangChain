@@ -8,4 +8,4 @@
 | deepseek-r1:8b   | 6995872bfe4c  | 5.2 GB  |
 | llama3.1:latest  | 46e0c10c039e  | 4.9 GB  |
 | phi3:latest      | 4f2222927938  | 2.2 GB  |
-| gemma:2b         | b50d6c999e59  | 1.7 GB  |
+| gemma2:2b        | b50d6c999e59  | 1.6 GB  |
