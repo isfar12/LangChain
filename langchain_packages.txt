@@ -3,6 +3,7 @@ langchain-core
 langchain-openai
 openai
 langchain_ollama
+langchain_experimental
 langchain_gemini
 langchain-anthropic
 langchain-google-genai
