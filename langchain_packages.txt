@@ -13,3 +13,6 @@ huggingface-hub
 python-dotenv
 numpy
 scikit-learn
+pi-heif
+"unstructured[all-docs]"pdf2image
+pytesseract

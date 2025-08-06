@@ -1,0 +1,82 @@
+LangChain Document Loaders
+===========================
+
+Document loaders in LangChain are responsible for loading, parsing, and preparing data from a wide range of sources such as files, websites, APIs, databases, and cloud storage. These loaders convert raw data into a format (typically LangChain `Document` objects) that can be processed for tasks like embedding, chunking, retrieval, and question-answering.
+
+1. File-Based Loaders
+----------------------
+These loaders work with files stored locally or in a file system.
+
+- TextLoader: Loads `.txt` files.
+- CSVLoader: Loads `.csv` files row by row.
+- UnstructuredPDFLoader / PyPDFLoader: Extracts text from PDF files.
+- Docx2txtLoader / UnstructuredWordDocumentLoader: Extracts text from `.docx` files.
+- JSONLoader: Extracts fields from JSON files using mapping logic.
+- MarkdownLoader: Parses `.md` Markdown files.
+- EPubLoader: For `.epub` eBooks.
+- HTMLLoader: Loads and parses HTML documents.
+
+2. Web and API-Based Loaders
+-----------------------------
+These loaders fetch and parse web content or data from APIs.
+
+- WebBaseLoader: Loads HTML content from a given URL.
+- SitemapLoader: Crawls URLs listed in a sitemap.
+- WikipediaLoader: Loads Wikipedia articles.
+- ArxivLoader: Loads scientific papers from arXiv.
+- NotionLoader: Loads pages or databases from Notion.
+- GoogleDriveLoader: Extracts files from Google Drive.
+- SlackLoader: Retrieves Slack messages.
+- GitHubIssuesLoader: Loads issues and comments from GitHub repos.
+- RedditPostsLoader: Loads Reddit post and comment data.
+- YouTubeLoader: Extracts transcripts from YouTube videos.
+
+3. Cloud Storage Loaders
+-------------------------
+These are used to load documents stored in cloud services.
+
+- S3DirectoryLoader: Loads from AWS S3 buckets.
+- GCSDirectoryLoader: Loads from Google Cloud Storage.
+- AzureBlobStorageContainerLoader: Loads blobs from Azure.
+
+4. Database Loaders
+--------------------
+These connect to structured databases and load data.
+
+- SQLDatabaseLoader: Queries SQL databases and loads data.
+- MongoDBLoader: Loads documents from MongoDB collections.
+- FAISSLoader: Loads documents embedded and stored in FAISS indexes.
+
+5. Specialized Loaders
+------------------------
+These loaders are tailored to specific tools or formats.
+
+- EmailLoader: For `.eml` or `.msg` email files.
+- OutlookMessageLoader: Specifically for Outlook `.msg` files.
+- DataFrameLoader: Converts a Pandas DataFrame into documents.
+- EverNoteLoader: Extracts notes from `.enex` Evernote exports.
+- ObsidianLoader: Loads notes from an Obsidian vault.
+- RoamLoader: Loads notes from Roam Research.
+- JupyterNotebookLoader: Loads `.ipynb` notebook cells as documents.
+
+6. Unstructured I/O Loaders
+----------------------------
+These loaders use the `unstructured` library for general-purpose file parsing.
+
+- UnstructuredFileLoader: Generic loader for any file type.
+- UnstructuredPDFLoader, UnstructuredHTMLLoader, UnstructuredMarkdownLoader: Format-specific loaders.
+
+7. Custom Loaders
+------------------
+LangChain supports the creation of custom loaders by extending the `BaseLoader` class, allowing users to process data from any custom source.
+
+Example:
+--------
+from langchain.document_loaders import WebBaseLoader
+
+loader = WebBaseLoader("https://en.wikipedia.org/wiki/LangChain")
+documents = loader.load()
+
+Conclusion:
+-----------
+Document loaders in LangChain enable a wide range of data ingestion options. Whether you're working with plain text, structured databases, or APIs, there's likely a loader available—or you can build your own for custom data pipelines.
