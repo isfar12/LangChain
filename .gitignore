@@ -3,3 +3,5 @@
 *.env
 .env.local
 .env.*.local
+9. vector_stores/chroma_vector_store
+9. vector_stores/faiss_vector_store_with_meta

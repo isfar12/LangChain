@@ -17,3 +17,5 @@ scikit-learn
 pi-heif
 "unstructured[all-docs]"pdf2image
 pytesseract
+langchain-chroma
+faiss-cpu
