@@ -19,3 +19,7 @@ pi-heif
 pytesseract
 langchain-chroma
 faiss-cpu
+ragas
+youtube-transcript-api
+tiktoken
+yt-dlp
