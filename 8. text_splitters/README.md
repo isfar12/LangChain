@@ -1,35 +1,69 @@
-# Text Splitters in LangChain
+# Text Splitters in LangChain - Complete Tutorial Guide
 
 ## Table of Contents
 
 1. [Introduction to Text Splitters](#introduction-to-text-splitters)
 2. [Why Text Splitting is Important](#why-text-splitting-is-important)
-3. [Prerequisites](#prerequisites)
+3. [Prerequisites and Setup](#prerequisites-and-setup)
 4. [Tutorial 1: Length-Based Text Splitting](#tutorial-1-length-based-text-splitting)
 5. [Tutorial 2: Structure-Based Text Splitting](#tutorial-2-structure-based-text-splitting)
 6. [Tutorial 3: Code-Specific Text Splitting](#tutorial-3-code-specific-text-splitting)
 7. [Tutorial 4: Semantic-Based Text Splitting](#tutorial-4-semantic-based-text-splitting)
 8. [Comparison and Use Cases](#comparison-and-use-cases)
-9. [Best Practices](#best-practices)
-10. [Running the Examples](#running-the-examples)
+9. [Best Practices and Performance Tips](#best-practices-and-performance-tips)
+10. [Advanced Configurations](#advanced-configurations)
+11. [Running the Examples](#running-the-examples)
+12. [Troubleshooting Guide](#troubleshooting-guide)
 
 ## Introduction to Text Splitters
 
-Text splitters are essential tools in LangChain that break down large documents into smaller, manageable chunks. These chunks are crucial for:
+Text splitters are **fundamental tools** in LangChain that intelligently break down large documents into smaller, manageable chunks. Think of them as smart scissors that know where to cut text for optimal processing.
 
-- **Vector databases**: Most embedding models have token limits
-- **RAG (Retrieval Augmented Generation)**: Smaller chunks improve retrieval accuracy
-- **Memory management**: Processing large documents efficiently
-- **Context windows**: Fitting content within model limits
+### Why Are Text Splitters Essential?
 
-### Core Concept
+Imagine you have a 50-page PDF document, but your AI model can only process 2 pages at a time. Text splitters solve this by:
 
-When you have a 10,000-word document, you can't send it directly to most language models due to context window limitations. Text splitters solve this by:
+- **Breaking** large text into smaller pieces that fit within model limits
+- **Preserving** meaningful context through intelligent overlapping
+- **Maintaining** document structure and semantic meaning
+- **Optimizing** content for specific tasks like embedding, retrieval, and Q&A
 
-1. **Breaking** large text into smaller pieces
-2. **Preserving** context through overlapping chunks
-3. **Maintaining** semantic meaning when possible
-4. **Optimizing** for downstream tasks like embedding and retrieval
+### Core Concepts Explained
+
+**🧩 Chunking**: The process of dividing text into manageable pieces
+- **Input**: Large document (10,000+ words)
+- **Output**: Multiple smaller chunks (200-1000 words each)
+- **Goal**: Maintain meaning while fitting model constraints
+
+**🔄 Overlapping**: Keeping some text from the previous chunk in the next one
+- **Purpose**: Preserve context across chunk boundaries
+- **Example**: Last 50 characters of chunk 1 appear in first 50 characters of chunk 2
+- **Benefit**: Prevents information loss at chunk edges
+
+**📏 Chunk Size**: The maximum length of each text piece
+- **Too small**: Loss of context, fragmented information
+- **Too large**: Exceeds model limits, poor retrieval performance
+- **Sweet spot**: 200-1000 characters depending on use case
+
+### Real-World Applications
+
+1. **RAG (Retrieval Augmented Generation)**:
+   ```
+   User Question: "What is machine learning?"
+   → Search chunks instead of entire documents
+   → Find most relevant 2-3 chunks
+   → Generate answer from focused content
+   ```
+
+2. **Document Embedding**:
+   ```
+   Large PDF → Split into chunks → Embed each chunk → Store in vector database
+   ```
+
+3. **Question Answering**:
+   ```
+   Knowledge Base → Chunked content → Relevant chunk retrieval → Precise answers
+   ```
 
 ## Why Text Splitting is Important
 

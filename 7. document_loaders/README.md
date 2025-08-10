@@ -1,395 +1,388 @@
-# Document Loaders in LangChain
+# Document Loaders Tutorial
 
-## Overview
+This tutorial shows you how to load different types of documents in LangChain and process them with AI models.
 
-Document loaders are essential components in LangChain that help you import and process various types of documents into a format that can be used by language models. They convert different file formats (text, PDF, CSV, web pages) into LangChain Document objects that contain both content and metadata.
+## Files Overview
+- `1. text_loader.py` - Load text files and generate summaries
+- `2. pypdf_loader.py` - Extract text from PDF files
+- `3. directory_loader.py` - Load multiple PDF files at once
+- `4. lazy_loader_Vs_loader.py` - Memory-efficient loading strategies
+- `5. csv_loader.py` - Process CSV data with AI
+- `5. web_based_loader.py` - Load content from web pages
 
-## What is a Document Loader?
+---
 
-A document loader is a tool that:
-- Reads files from different sources (local files, URLs, databases)
-- Converts content into LangChain Document objects
-- Preserves metadata (file path, page numbers, etc.)
-- Handles different file formats automatically
+## Tutorial 1: Text File Loading (`1. text_loader.py`)
 
-## Document Structure
+### What it does:
+Loads a text file and creates an AI summary using ChatOllama.
 
-When a document loader processes a file, it creates Document objects with:
-- **page_content**: The actual text content
-- **metadata**: Information about the source (file path, page number, etc.)
+### Step-by-step breakdown:
 
-## Available Document Loaders
-
-### 1. Text Loader (`1. text_loader.py`)
-
-**Purpose**: Loads plain text files (.txt) and processes them with AI models.
-
-**Key Features**:
-- Handles text encoding (UTF-8, etc.)
-- Loads entire text file as a single document
-- Simple and fast for basic text processing
-
-**Code Breakdown**:
+**Step 1: Import libraries**
 ```python
 from langchain_community.document_loaders import TextLoader
-
-# Create loader with encoding specification
-loader = TextLoader(
-    r"E:\LangChain\7. document_loaders\Documents\Langchain DocumentLoader Types.txt", 
-    encoding="utf-8"
-)
-
-# Load document - returns list of Document objects
-document = loader.load()
+from langchain_ollama import ChatOllama
+from langchain_core.prompts import PromptTemplate
+from langchain_core.output_parsers import StrOutputParser
+import time
 ```
 
-**What happens**:
-1. TextLoader reads the entire file
-2. Creates one Document object with all content
-3. Stores file path in metadata
-4. Content is accessible via `document[0].page_content`
+**Step 2: Setup AI model**
+```python
+model = ChatOllama(
+    model="gemma2:2b",
+    temperature=0.5,
+)
+```
+- Uses gemma2:2b model (lightweight and fast)
+- temperature=0.5 balances creativity and consistency
 
-**When to use**: 
-- Plain text files
-- Configuration files
-- Simple documents without complex formatting
+**Step 3: Create prompt template**
+```python
+prompt = PromptTemplate(
+    template="Write the summary of the following document: {text}",
+    input_variables=["text"],
+)
+```
+- Template asks AI to summarize the document
+- {text} will be replaced with actual document content
+
+**Step 4: Setup output parser**
+```python
+parser = StrOutputParser()
+```
+- Converts AI response to clean string
+
+**Step 5: Load the document**
+```python
+loader = TextLoader(r"E:\LangChain\7. document_loaders\Documents\Langchain DocumentLoader Types.txt", encoding="utf-8")
+document = loader.load()
+```
+- Loads text file with UTF-8 encoding
+- Returns list with one Document object
+
+**Step 6: Create processing chain**
+```python
+chain = prompt | model | parser
+```
+- Combines prompt → model → parser in sequence
+
+**Step 7: Process and measure time**
+```python
+start = time.time()
+result = chain.invoke({"text": document[0].page_content})
+print(result)
+end = time.time()
+print(f"Processing time: {end - start} seconds")
+```
+- Processes document content through the chain
+- Measures and displays processing time
+
+**Step 8: Show document info**
+```python
+print(len(document))      # Number of documents (1)
+print(type(document))     # List
+print(type(document[0]))  # Document object
+print(document[0])        # Full document with metadata
+```
 
 ---
 
-### 2. PDF Loader (`2. pypdf_loader.py`)
+## Tutorial 2: PDF Loading (`2. pypdf_loader.py`)
 
-**Purpose**: Extracts text from PDF files, handling multiple pages automatically.
+### What it does:
+Extracts text from PDF files, with each page as a separate document.
 
-**Key Features**:
-- Splits PDF into individual pages
-- Each page becomes a separate Document object
-- Preserves page numbers in metadata
-- Works with most standard PDFs
+### Step-by-step breakdown:
 
-**Code Breakdown**:
+**Step 1: Import libraries**
 ```python
 from langchain_community.document_loaders import PyPDFLoader
-
-# Create PDF loader
-loader = PyPDFLoader(document_path)
-
-# Load document - returns list with one Document per page
-document = loader.load()
+from langchain_ollama import ChatOllama
+from langchain_core.prompts import PromptTemplate
+from langchain_core.output_parsers import StrOutputParser
+import time
 ```
 
-**What happens**:
-1. PyPDFLoader opens the PDF file
-2. Extracts text from each page separately
-3. Creates Document object for each page
-4. Metadata includes page number and source file
+**Step 2: Set document path**
+```python
+document_path = r"E:\LangChain\7. document_loaders\Documents\Movie Recommend Approach.pdf"
+```
 
-**Document structure**:
-- `document[0]` = Page 1 content
-- `document[1]` = Page 2 content
-- Each has metadata: `{'source': 'file_path', 'page': page_number}`
+**Step 3: Load PDF**
+```python
+loader = PyPDFLoader(document_path)
+document = loader.load()
+```
+- Each PDF page becomes a separate Document object
 
-**When to use**:
-- Academic papers
-- Reports
-- Books
-- Any multi-page PDF documents
+**Step 4: Analyze results**
+```python
+print(len(document))                # Number of pages
+print(document[0].page_content)     # First page content
+```
+
+### Key Points:
+- PDF with 10 pages = 10 Document objects
+- Each document has page content and metadata (source file, page number)
+- Good for multi-page documents like research papers
 
 ---
 
-### 3. Directory Loader (`3. directory_loader.py`)
+## Tutorial 3: Directory Loading (`3. directory_loader.py`)
 
-**Purpose**: Loads multiple files from a directory using pattern matching.
+### What it does:
+Loads all PDF files from a directory at once using pattern matching.
 
-**Key Features**:
-- Processes multiple files at once
-- Uses glob patterns to filter files
-- Applies specified loader to each matching file
-- Combines all documents into one list
+### Step-by-step breakdown:
 
-**Code Breakdown**:
+**Step 1: Import libraries**
 ```python
-from langchain_community.document_loaders import DirectoryLoader, PyPDFLoader
+from langchain_community.document_loaders import PyPDFLoader, DirectoryLoader
+```
+
+**Step 2: Setup directory loader**
+```python
+docs = DirectoryLoader(
+    path=r"E:\LangChain\7. document_loaders\Documents",
+    glob="**/*.pdf",         # Find all PDF files, including subdirectories
+    loader_cls=PyPDFLoader,  # Use PyPDFLoader for each PDF
+)
+```
+
+**Step 3: Load all documents**
+```python
+lists = docs.load()
+```
+- Scans directory for PDF files
+- Loads each PDF using PyPDFLoader
+- Combines all pages into one list
+
+**Step 4: Check results**
+```python
+print(len(lists))                   # Total pages from all PDFs
+print(lists[20].page_content)       # Content from page 21
+```
+
+### Glob Patterns:
+- `*.pdf` = PDFs in current directory only
+- `**/*.pdf` = PDFs in all subdirectories too
+- `**/*.txt` = All text files everywhere
+
+---
+
+## Tutorial 4: Memory Management (`4. lazy_loader_Vs_loader.py`)
+
+### What it does:
+Compares two loading strategies for memory efficiency.
+
+### Step-by-step breakdown:
+
+**Step 1: Setup (same as directory loader)**
+```python
+from langchain_community.document_loaders import PyPDFLoader, DirectoryLoader
 
 docs = DirectoryLoader(
     path=r"E:\LangChain\7. document_loaders\Documents",
-    glob="**/*.pdf",  # Find all PDF files, including subdirectories
-    loader_cls=PyPDFLoader  # Use PyPDFLoader for each PDF
+    glob="**/*.pdf",
+    loader_cls=PyPDFLoader,
 )
-
-documents = docs.load()
 ```
 
-**What happens**:
-1. Scans directory for files matching pattern
-2. Applies PyPDFLoader to each PDF found
-3. Combines all resulting documents into one list
-4. Each document retains its source file information
-
-**Glob patterns**:
-- `"*.pdf"` - All PDFs in current directory
-- `"**/*.pdf"` - All PDFs in current and subdirectories
-- `"**/*.txt"` - All text files everywhere
-- `"data/*.csv"` - All CSVs in data folder
-
-**When to use**:
-- Processing multiple files of same type
-- Batch document processing
-- Building document databases
-
----
-
-### 4. Lazy Loading vs Regular Loading (`4. lazy_loader_Vs_loader.py`)
-
-**Purpose**: Demonstrates two different loading strategies for memory management.
-
-**Regular Loading (`.load()`)**:
-- Loads ALL documents into memory immediately
-- Fast access to all documents
-- High memory usage
-- Good for small datasets
-
-**Lazy Loading (`.lazy_load()`)**:
-- Loads documents one at a time as needed
-- Lower memory usage
-- Slower access
-- Good for large datasets
-
-**Code Breakdown**:
+**Step 2: Lazy Loading (Memory Efficient)**
 ```python
-# Lazy loading - memory efficient
-lazy_docs = docs.lazy_load()
-for doc in lazy_docs:
-    print(doc.metadata)  # Loads one document at a time
-
-# Regular loading - loads everything
-all_docs = docs.load()
-for doc in all_docs:
-    print(doc.metadata)  # All documents already in memory
+lists = docs.lazy_load()
+for i in lists:
+    print(i.metadata)  # Load one document at a time
 ```
+- Documents loaded one by one
+- Previous document freed from memory
+- Good for large collections
 
-**When to use lazy loading**:
-- Large directories with many files
-- Limited memory environments
-- Processing documents one at a time
+**Step 3: Regular Loading (Memory Intensive)**
+```python
+lists = docs.load()
+for i in lists:
+    print(i.metadata)  # All documents already in memory
+```
+- All documents loaded at once
+- All stay in memory until finished
+- Fast access but uses more RAM
 
-**When to use regular loading**:
-- Small datasets
-- Need random access to documents
-- Performing multiple operations on same data
+### When to use:
+- **Lazy loading**: Large directories, limited RAM
+- **Regular loading**: Small collections, need speed
 
 ---
 
-### 5. CSV Loader (`5. csv_loader.py`)
+## Tutorial 5: CSV Processing (`5. csv_loader.py`)
 
-**Purpose**: Loads CSV files and converts each row into a separate document.
+### What it does:
+Loads CSV data and analyzes it with AI.
 
-**Key Features**:
-- Each CSV row becomes a Document object
-- Column headers are preserved
-- Handles different CSV formats
-- Good for structured data processing
+### Step-by-step breakdown:
 
-**Code Breakdown**:
+**Step 1: Import libraries**
 ```python
 from langchain_community.document_loaders import CSVLoader
+from langchain_ollama import ChatOllama
+from langchain_core.output_parsers import StrOutputParser
+from langchain_core.prompts import PromptTemplate
+```
 
-document_loader = CSVLoader(
-    file_path=r"E:\LangChain\7. document_loaders\Documents\Student Mental health.csv"
+**Step 2: Setup AI model**
+```python
+chat = ChatOllama(
+    model="gemma3:1b",
+    temperature=0.5
 )
+parser = StrOutputParser()
+```
 
+**Step 3: Create analysis prompt**
+```python
+prompt = PromptTemplate(
+    template="Extract the first 5 rows from the CSV file: {file} \n\nand explain what the data represents.",
+    input_variables=["file"],
+)
+```
+
+**Step 4: Load CSV file**
+```python
+document_loader = CSVLoader(
+    file_path=r"E:\LangChain\7. document_loaders\Documents\Student Mental health.csv",
+)
 documents = document_loader.load()
 ```
+- Each CSV row becomes a Document object
 
-**What happens**:
-1. Reads CSV file with headers
-2. Converts each row to a Document
-3. Row content becomes page_content
-4. File information stored in metadata
+**Step 5: Process first 5 rows**
+```python
+chain = prompt | chat | parser
 
-**Document format**:
-Each row becomes:
+first_5 = "\n\n".join([doc.page_content for doc in documents[:5]])
+print(first_5)
+print(chain.invoke({"file": first_5}))
 ```
-page_content: "column1: value1\ncolumn2: value2\ncolumn3: value3"
-metadata: {'source': 'file_path', 'row': row_number}
-```
-
-**When to use**:
-- Customer data
-- Survey responses
-- Tabular data analysis
-- Structured datasets
+- Combines first 5 rows
+- Asks AI to explain the data
 
 ---
 
-### 6. Web-Based Loader (`5. web_based_loader.py`)
+## Tutorial 6: Web Loading (`5. web_based_loader.py`)
 
-**Purpose**: Loads content from web pages using two different approaches.
+### What it does:
+Loads content from web pages using two different methods.
 
-**Two Types**:
+### Step-by-step breakdown:
 
-**WebBaseLoader**:
-- For static web pages
-- Fast and lightweight
-- Good for simple HTML content
-- Limited JavaScript support
-
-**PlaywrightURLLoader**:
-- For dynamic web pages
-- Full browser simulation
-- Handles JavaScript
-- Slower but more capable
-
-**Code Breakdown**:
+**Step 1: Import libraries**
 ```python
 from langchain_community.document_loaders import PlaywrightURLLoader, WebBaseLoader
+from langchain_ollama import ChatOllama
+from langchain_core.output_parsers import StrOutputParser
+from langchain_core.prompts import PromptTemplate
+import time
+```
 
-# For static pages
+**Step 2: Setup AI model and prompt**
+```python
+chat = ChatOllama(
+    model="gemma3:1b",
+    temperature=0.5
+)
+
+prompt = PromptTemplate(
+    template="Summarize the product details from the following content: {content}",
+    input_variables=["content"]
+)
+
+parser = StrOutputParser()
+```
+
+**Step 3: Define URLs**
+```python
+urls = ["https://www.applegadgetsbd.com/product/apple-mac-mini-m4-10-core-cpu-10-core-gpu-16-256gb"]  # For Playwright
+url = "https://en.wikipedia.org/wiki/Pauline_Ferrand-Pr%C3%A9vot"  # For WebBase
+```
+
+**Step 4: Load with WebBaseLoader (Static pages)**
+```python
 loader_web = WebBaseLoader(url)
 documents_web = loader_web.load()
+```
+- Fast for simple websites
+- Good for static content
 
-# For dynamic pages
+**Step 5: Load with PlaywrightURLLoader (Dynamic pages)**
+```python
 loader = PlaywrightURLLoader(urls=urls, headless=True)
 documents = loader.load()
 ```
+- Handles JavaScript
+- Good for complex websites
+- Requires: `playwright install`
 
-**WebBaseLoader use cases**:
-- News articles
-- Blog posts
-- Static product pages
-- Simple websites
+**Step 6: Process with AI**
+```python
+chain = prompt | chat | parser
 
-**PlaywrightURLLoader use cases**:
-- E-commerce sites with dynamic content
-- Social media pages
-- JavaScript-heavy applications
-- Sites requiring interaction
+begin = time.time()
+result = chain.invoke({"content": documents[0].page_content})
+end = time.time()
+
+print(result)
+print(f"Time taken: {end - begin} seconds")
+```
 
 ---
 
-## Sample Documents
+## Installation Guide
 
-The `Documents/` folder contains example files for testing:
-
-- **Langchain DocumentLoader Types.txt**: Text file with documentation
-- **Movie Recommend Approach.pdf**: PDF document for testing
-- **Student Mental health.csv**: CSV data for analysis
-- **Software Engineering Overview.pdf**: Multi-page PDF
-- **Scanned Optics PDF.pdf**: Another PDF sample
-
-## Common Patterns
-
-### Basic Loading Pattern
-```python
-# 1. Import loader
-from langchain_community.document_loaders import LoaderClass
-
-# 2. Create loader instance
-loader = LoaderClass(file_path_or_parameters)
-
-# 3. Load documents
-documents = loader.load()
-
-# 4. Access content
-content = documents[0].page_content
-metadata = documents[0].metadata
+**Install required packages:**
+```bash
+pip install langchain-community langchain-ollama langchain-core
 ```
 
-### Processing with AI Models
-```python
-# After loading documents
-from langchain_ollama import ChatOllama
-from langchain_core.prompts import PromptTemplate
-
-model = ChatOllama(model="gemma2:2b")
-prompt = PromptTemplate(
-    template="Summarize: {text}",
-    input_variables=["text"]
-)
-
-# Process document content
-result = (prompt | model).invoke({"text": documents[0].page_content})
+**For web loading:**
+```bash
+pip install playwright
+playwright install
 ```
 
-## Error Handling
-
-Common issues and solutions:
-
-**File not found**:
-```python
-try:
-    documents = loader.load()
-except FileNotFoundError:
-    print("File not found - check file path")
+**Setup Ollama models:**
+```bash
+ollama pull gemma2:2b
+ollama pull gemma3:1b
 ```
 
-**Encoding issues**:
-```python
-# Specify encoding for text files
-loader = TextLoader(file_path, encoding="utf-8")
+## Running Examples
+
+```bash
+cd "E:\LangChain\7. document_loaders"
+python "1. text_loader.py"
+python "2. pypdf_loader.py"
+python "3. directory_loader.py"
+python "4. lazy_loader_Vs_loader.py"
+python "5. csv_loader.py"
+python "5. web_based_loader.py"
 ```
 
-**Memory issues with large files**:
-```python
-# Use lazy loading
-documents = loader.lazy_load()
-for doc in documents:
-    process_document(doc)
-```
+## Quick Reference
 
-## Performance Tips
+| File Type | Loader | Best For |
+|-----------|---------|----------|
+| .txt | TextLoader | Simple text files |
+| .pdf | PyPDFLoader | PDF documents |
+| Multiple files | DirectoryLoader | Batch processing |
+| .csv | CSVLoader | Spreadsheet data |
+| Web pages | WebBaseLoader/PlaywrightURLLoader | Online content |
 
-1. **Use appropriate loader**: Don't use PDF loader for text files
-2. **Lazy loading**: For large datasets to save memory
-3. **Batch processing**: Process multiple similar documents together
-4. **Caching**: Store processed results to avoid reloading
-5. **File size**: Break very large files into smaller chunks
+## Tips
 
-## Best Practices
-
-1. **Always check document structure**: Print first document to understand format
-2. **Handle metadata**: Use metadata for document tracking and filtering
-3. **Validate content**: Check if content loaded correctly before processing
-4. **Error handling**: Implement proper error handling for file operations
-5. **Resource management**: Clean up resources, especially with web loaders
-
-## Running the Examples
-
-To run any example:
-
-1. **Install requirements**:
-   ```bash
-   pip install langchain-community langchain-ollama langchain-core
-   ```
-
-2. **For web loader (Playwright)**:
-   ```bash
-   pip install playwright
-   playwright install
-   ```
-
-3. **Start Ollama**:
-   ```bash
-   ollama serve
-   ollama pull gemma2:2b
-   ollama pull gemma3:1b
-   ```
-
-4. **Run examples**:
-   ```bash
-   cd "e:\LangChain\7. document_loaders"
-   python "1. text_loader.py"
-   python "2. pypdf_loader.py"
-   # ... and so on
-   ```
-
-## Summary
-
-Document loaders are the foundation of document processing in LangChain. They provide:
-
-- **Unified interface** for different file types
-- **Automatic content extraction** from various formats
-- **Metadata preservation** for document tracking
-- **Memory management** options for different use cases
-- **Web content access** for dynamic data sources
-
-Choose the right loader based on your file type and processing needs. Start with simple loaders for basic use cases and move to more specialized ones as requirements grow.
+1. **Memory**: Use lazy loading for large collections
+2. **Encoding**: Add `encoding="utf-8"` for text files
+3. **Paths**: Use raw strings `r"path"` for Windows paths
+4. **Testing**: Start with small files first
+5. **Error handling**: Check if documents loaded before processing

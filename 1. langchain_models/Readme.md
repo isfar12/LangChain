@@ -57,6 +57,12 @@ llm = OllamaLLM(model="phi3", temperature=0.7)
 response = llm.invoke("What is the capital of France?")
 ```
 
+**What this code does:**
+- Creates a connection to the locally running Ollama service
+- Initializes the Phi3 model with moderate creativity (temperature=0.7)
+- Sends a simple text prompt and receives a completion response
+- Returns a string answer without conversation context
+
 **Features:**
 
 - Local Ollama model integration
@@ -87,6 +93,13 @@ messages = [
 response = chat.invoke(messages)
 ```
 
+**What this code does:**
+- Creates a chat-based model that can handle structured conversations
+- Sets up a system message to define the AI's role and behavior
+- Sends a list of messages (system + human) to maintain conversation context
+- Returns a structured chat response that can be part of ongoing dialogue
+- Enables more sophisticated interactions than simple text completion
+
 **Features:**
 
 - Message-based conversation
@@ -110,6 +123,13 @@ generator = pipeline(
 llm = HuggingFacePipeline(pipeline=generator)
 ```
 
+**What this code does:**
+- Downloads and loads a HuggingFace model locally to your machine
+- Creates a text generation pipeline with custom parameters (length, temperature)
+- Wraps the HuggingFace pipeline in a LangChain-compatible interface
+- Enables offline text generation without requiring internet connectivity
+- Provides full control over model parameters and generation settings
+
 **Features:**
 
 - Local HuggingFace model integration
@@ -129,6 +149,13 @@ llm = HuggingFaceEndpoint(
 )
 chat_model = ChatHuggingFace(llm=llm)
 ```
+
+**What this code does:**
+- Connects to HuggingFace's cloud-based Inference API service
+- Accesses the DeepSeek-R1 model remotely without local installation
+- Creates an API endpoint connection that handles authentication automatically
+- Wraps the API endpoint in a chat-compatible interface for conversations
+- Enables access to large, powerful models that may be too big to run locally
 
 **Features:**
 
@@ -157,6 +184,13 @@ embeddings = HuggingFaceEmbeddings(
 result = embeddings.embed_query("What is the capital of Bangladesh?")
 ```
 
+**What this code does:**
+- Loads a pre-trained sentence transformer model locally for text embeddings
+- Converts text into numerical vectors (384 dimensions) that capture semantic meaning
+- Takes any text query and transforms it into a dense vector representation
+- Enables semantic similarity comparisons between different pieces of text
+- Provides the foundation for semantic search, clustering, and similarity analysis
+
 **Features:**
 
 - 384-dimensional embeddings
@@ -179,6 +213,13 @@ documents = [
 embeddings_list = embeddings.embed_documents(documents)
 similarity_matrix = cosine_similarity(embeddings_list)
 ```
+
+**What this code does:**
+- Takes multiple text documents and converts each into embedding vectors
+- Uses cosine similarity to measure how semantically similar documents are to each other
+- Creates a similarity matrix showing the relationship between all document pairs
+- Values range from 0 (completely different) to 1 (identical meaning)
+- Identifies which documents discuss similar topics or contain related information
 
 **Features:**
 
