@@ -146,19 +146,19 @@ extraction_template = PromptTemplate(
 
 ## Benefits of JsonOutputParser
 
-✅ **Structured Output** - Returns Python dictionaries
-✅ **Automatic Parsing** - No manual JSON.loads() needed
-✅ **Format Guidance** - Provides instructions to LLM
-✅ **Flexible Schema** - No rigid structure required
-✅ **Easy Integration** - Works with prompt templates
+- ✅ **Structured Output** - Returns Python dictionaries
+- ✅ **Automatic Parsing** - No manual JSON.loads() needed
+- ✅ **Format Guidance** - Provides instructions to LLM
+- ✅ **Flexible Schema** - No rigid structure required
+- ✅ **Easy Integration** - Works with prompt templates
 
 ## Limitations and Challenges
 
-❌ **No Validation** - Doesn't enforce specific fields
-❌ **Inconsistent Structure** - Output format may vary
-❌ **Parsing Failures** - May fail with malformed JSON
-❌ **No Type Checking** - No guarantee of data types
-❌ **Model Dependent** - Success depends on model capability
+- ❌ **No Validation** - Doesn't enforce specific fields
+- ❌ **Inconsistent Structure** - Output format may vary
+- ❌ **Parsing Failures** - May fail with malformed JSON
+- ❌ **No Type Checking** - No guarantee of data types
+- ❌ **Model Dependent** - Success depends on model capability
 
 ## Common Issues
 

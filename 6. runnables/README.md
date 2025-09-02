@@ -391,11 +391,11 @@ Output: {
     "linkedin_post": "AI is revolutionizing...",
     "tweet": "🤖 AI is changing everything! #AI #Tech"
 }
-```
+
 │ "linkedin_post" branch              │ "tweet" branch                      │
 │ prompt1 → model1 → parser           │ prompt2 → model2 → parser           │
 └─────────────────────────────────────┴─────────────────────────────────────┘
-↓
+                                    ↓
 Output: {"linkedin_post": "...", "tweet": "..."}
 ```
 

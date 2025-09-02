@@ -748,7 +748,3 @@ The AI must **follow this schema** — like filling out a **government form**.
 Think of **structured output** as putting AI answers into **labeled boxes** instead of dumping them into a bag. It’s easier to **find, use, and trust** the information.
 
 ---
-
-Would you like me to:
-✅ **Show a real LangChain code example** with structured output (JSON)?
-✅ Or **make a diagram** showing “AI → LangChain → Structured Output”?
