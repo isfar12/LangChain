@@ -4,7 +4,7 @@ from langchain_core.messages import HumanMessage,SystemMessage
 
 # using downloaded local ollama model
 
-chat = ChatOllama(model="phi3", temperature=0.7)
+chat = ChatOllama(model="gemma3:1b", temperature=0.7)
 
 messages=[
     SystemMessage(content="You are a helpful assistant."),
