@@ -1,21 +1,36 @@
+from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain_ollama import ChatOllama
-from typing import TypedDict,Annotated,Optional,Literal
+from typing import TypedDict, Annotated, Optional, Literal
 from pydantic import BaseModel, EmailStr, Field
 # TypedDict is a special class in Python's typing module that allows you to specify the expected types of dictionary keys and values.
+from dotenv import load_dotenv
+load_dotenv()
 
-model=ChatOllama(
-    model="llama3.1",
+model = ChatOllama(
+    model="granite4:1b",
     temperature=0.5,
 )
 
 
-#annotated/optional typedict example, this allows you to add metadata to the fields so that ai can understand the context better
+model_google = ChatGoogleGenerativeAI(
+    model="gemini-3-flash-preview",
+    temperature=1.0,  # Gemini 3.0+ defaults to 1.0
+    max_tokens=None,
+    timeout=None,
+    max_retries=2,
+    # other params...
+)
+
+
+# annotated/optional typedict example, this allows you to add metadata to the fields so that ai can understand the context better
 class User(BaseModel):
     name: Annotated[str, Field(default="unknown")]
     email: EmailStr
-    age: Optional[int] = Field(None, ge=0, description="The age of the user, must be non-negative")
+    age: Optional[int] = Field(
+        None, ge=0, description="The age of the user, must be non-negative")
 
-structured_output_2 = model.with_structured_output(User)
+
+structured_output_2 = model_google.with_structured_output(User)
 
 # It helps with type checking and code clarity when working with dictionaries that have a fixed structure.
 user = structured_output_2.invoke(

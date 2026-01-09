@@ -4,7 +4,7 @@ from langchain_ollama import ChatOllama
 
 
 model=ChatOllama(
-    model="gemma:2b",
+    model="gemma2:2b",
     temperature=0.5,  # Lower temperature for more consistent output
 )
 # This code demonstrates how to use the ChatOllama model with multiple prompts to generate a report and then summarize it by the same model.
